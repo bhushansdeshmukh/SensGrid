@@ -1,9 +1,9 @@
-type HeaderProps1 = {
+type HeaderProps = {
   title: string;
   subtitle?: string; // Optional
 };
 
-function Header({ title, subtitle }: HeaderProps1) {
+function Header({ title, subtitle }: HeaderProps) {
     return (
         <header>
             <h1>{title}</h1>
