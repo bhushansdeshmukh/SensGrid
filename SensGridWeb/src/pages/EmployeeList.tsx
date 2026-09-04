@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type Employee = {
     id: number;
@@ -10,6 +11,7 @@ type Employee = {
 
 function EmployeeList() {
     const [employees, setEmployees] = useState<Employee[]>([]);
+    const navigate = useNavigate();
 
     // useEffect = Page_Load / OnInit
     useEffect(() => {
@@ -44,7 +46,7 @@ function EmployeeList() {
                             <td>{emp.email}</td>
                             <td>{emp.role}</td>
                             <td>
-                                <button onClick={() => console.log(`Viewing employee: ${emp.firstName} ${emp.lastName}`)}>View</button>
+                                <button onClick={() => navigate(`/employees/${emp.id}`)}>View</button>
                             </td>
                         </tr>
                     ))}

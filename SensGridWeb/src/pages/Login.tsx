@@ -1,15 +1,18 @@
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const navigate = useNavigate();
 
     // Event handler for form submission
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault(); // prevent page reload
         // Perform login logic here
         console.log('Login Submitted:', email, password, rememberMe);
+        navigate('/employees'); // Navigate to EmployeeList page after login
     };
 
     return (
