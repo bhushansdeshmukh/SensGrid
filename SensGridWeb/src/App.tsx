@@ -1,11 +1,12 @@
-import './App.css';
 import Header from './components/Header';
+//import Counter from './components/Counter';
+import Login from './pages/Login';
 
 function App() {
   return (
     <div>
       <Header title="Employee Management" subtitle="Manage Employees Easily." />
-      <p>Welcome Bhushan, let’s build React step by step!</p>
+      <Login />
     </div>
   )
 }
