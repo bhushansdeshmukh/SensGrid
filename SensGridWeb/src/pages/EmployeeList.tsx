@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getEmployees, deleteEmployee } from '../services/EmployeeService';
+import { getEmployees, deleteEmployee } from '../services/employeeService';
 
 type Employee = {
     id: number;

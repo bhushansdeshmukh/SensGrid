@@ -27,31 +27,31 @@ function EmployeeForm({ initialValues, onSubmit }: EmployeeFormProps) {
                 <div>
                     <label>First Name:</label>
                     <Field name="firstname" />
-                    <ErrorMessage name="firstname" component="div" style={{ color: 'red' }} />
+                    <div style={{ color: 'red' }}><ErrorMessage name="firstname" /></div>
                 </div>
 
                 <div>
                     <label>Last Name:</label>
                     <Field name="lastname" />
-                    <ErrorMessage name="lastname" component="div" style={{ color: 'red' }} />
+                    <div style={{ color: 'red' }}><ErrorMessage name="lastname" /></div>
                 </div>
 
                 <div>
                     <label>Email:</label>
                     <Field name="email" />
-                    <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
+                    <div style={{ color: 'red' }}><ErrorMessage name="email" /></div>
                 </div>
 
                 <div>
                     <label>Phone:</label>
                     <Field name="phone" />
-                    <ErrorMessage name="phone" component="div" style={{ color: 'red' }} />
+                    <div style={{ color: 'red' }}><ErrorMessage name="phone" /></div>
                 </div>
 
                 <div>
                     <label>Role:</label>
                     <Field name="role" />
-                    <ErrorMessage name="role" component="div" style={{ color: 'red' }} />
+                    <div style={{ color: 'red' }}><ErrorMessage name="role" /></div>
                 </div>
                 <button type="submit">Submit</button>
             </Form>

@@ -7,7 +7,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
-    const API_URL ="http://localhost:7071/api";
+    const API_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 
     // Event handler for form submission
     const handleSubmit = async (event: React.FormEvent) => {
