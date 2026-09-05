@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getEmployees,deleteEmployee } from '../services/EmployeeService';
+import { getEmployees, deleteEmployee } from '../services/EmployeeService';
 
 type Employee = {
     id: number;
@@ -33,17 +33,16 @@ function EmployeeList() {
     }, []); // [] means this effect runs only once when the component mounts
 
     if (loading) { return <p>Loading Employees...</p>; }
-    if (error) { return <p style={{color:"red"}}>Error: {error}</p>; }
+    if (error) { return <p style={{ color: "red" }}>Error: {error}</p>; }
 
-    async function DeleteEmployee(id: number) {
-            try {
-                await deleteEmployee(id);
-                setEmployees(employees.filter(emp => emp.id !== id));
-            } catch (error) {
-                setError(`Failed to delete employee. Please try again later.${error}`);
-            }
+    const handleDelete = async (id: number) => {
+        if (window.confirm("Are you sure you want to delete this employee?")) {
+            await deleteEmployee(id);
+            const data = await getEmployees();
+            setEmployees(data);
         }
-    
+    };
+
     async function fetchData() {
         try {
             const data = await getEmployees();
@@ -59,6 +58,7 @@ function EmployeeList() {
         <div>
             <button onClick={() => fetchData()}>Refresh</button>
             <h2>Employee List</h2>
+            <button onClick={() => navigate('/eployees/add')}>Add New Employee</button>
             <table border={1}>
                 <thead>
                     <tr>
@@ -78,7 +78,8 @@ function EmployeeList() {
                             <td>{emp.role}</td>
                             <td>
                                 <button onClick={() => navigate(`/employees/${emp.id}`)}>View</button>
-                                <button onClick={() => DeleteEmployee(emp.id)}>Delete</button>
+                                <button onClick={() => navigate(`/employees/${emp.id}/edit`)}>Edit</button>
+                                <button onClick={() => handleDelete(emp.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
