@@ -60,6 +60,11 @@ function EmployeeList() {
             <h2>Employee List</h2>
             <p>Total Employees: {employees.length}</p>
             <button onClick={() => navigate('/employees/add')}>Add New Employee</button>
+            <button onClick={() => {
+                localStorage.removeItem('token');
+                navigate('/');
+            }}>Logout</button>
+            
             <table border={1}>
                 <thead>
                     <tr>

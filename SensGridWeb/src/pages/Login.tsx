@@ -1,18 +1,26 @@
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
+    const API_URL ="http://localhost:7071/api";
 
     // Event handler for form submission
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault(); // prevent page reload
-        // Perform login logic here
-        console.log('Login Submitted:', email, password, rememberMe);
-        navigate('/employees'); // Navigate to EmployeeList page after login
+        try {
+            const response = await axios.post(`${API_URL}/login`, { email, password });
+            const token = response.data.token;
+            // Store the token in localStorage or sessionStorage based on rememberMe
+            localStorage.setItem('token', token); //store jwt
+            navigate('/employees'); // Navigate to EmployeeList page after login
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
     };
 
     return (
