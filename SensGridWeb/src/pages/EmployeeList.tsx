@@ -58,7 +58,8 @@ function EmployeeList() {
         <div>
             <button onClick={() => fetchData()}>Refresh</button>
             <h2>Employee List</h2>
-            <button onClick={() => navigate('/eployees/add')}>Add New Employee</button>
+            <p>Total Employees: {employees.length}</p>
+            <button onClick={() => navigate('/employees/add')}>Add New Employee</button>
             <table border={1}>
                 <thead>
                     <tr>
