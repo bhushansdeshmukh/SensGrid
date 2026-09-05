@@ -4,8 +4,8 @@ import { getEmployees,deleteEmployee } from '../services/EmployeeService';
 
 type Employee = {
     id: number;
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     email: string;
     role: string;
 };
@@ -73,7 +73,7 @@ function EmployeeList() {
                     {employees.map((emp) => (
                         <tr key={emp.id}>
                             <td>{emp.id}</td>
-                            <td>{emp.firstName} {emp.lastName}</td>
+                            <td>{emp.firstname} {emp.lastname}</td>
                             <td>{emp.email}</td>
                             <td>{emp.role}</td>
                             <td>
