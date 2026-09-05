@@ -13,6 +13,7 @@ namespace SensGrid.src.Entities
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<UserAccount> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,6 +40,17 @@ namespace SensGrid.src.Entities
                 entity.Property(x => x.Phone).HasColumnName("phone");
                 entity.Property(x => x.Role).HasColumnName("role");
                 entity.Property(x => x.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("getdate()");
+            });
+
+            modelBuilder.Entity<UserAccount>(entity =>
+            {
+                entity.ToTable("User");
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Id).HasColumnName("id");
+                entity.Property(x => x.Email).HasColumnName("email");
+                entity.Property(x => x.Password).HasColumnName("password");
+                entity.Property(x => x.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("getdate()");
+                entity.HasIndex(x => x.Email).IsUnique();
             });
         }
     }

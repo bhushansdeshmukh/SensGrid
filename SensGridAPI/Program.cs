@@ -30,6 +30,7 @@ namespace SensGrid
             builder.Services.AddMemoryCache();
             builder.Services.AddLazyCache();
             builder.Services.AddScoped<EmployeesService>();
+            builder.Services.AddScoped<UsersService>();
         }
     }
 }
