@@ -1,70 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from '../store/store';
+import { fetchEmployees, deleteEmployeeThunk } from '../store/employeeSlice';
 import { useNavigate } from 'react-router-dom';
-import { getEmployees, deleteEmployee } from '../services/employeeService';
-
-type Employee = {
-    id: number;
-    firstname: string;
-    lastname: string;
-    email: string;
-    role: string;
-};
 
 function EmployeeList() {
-    const [employees, setEmployees] = useState<Employee[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    const { list, loading, error } = useSelector((state: RootState) => state.employees);
 
-    // useEffect = Page_Load / OnInit
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await getEmployees();
-                setEmployees(data);
-            } catch (error) {
-                setError(`Failed to fetch employees. Please try again later.${error}`);
-            } finally {
-                setLoading(false);
-            }
-        }
+        dispatch(fetchEmployees());
+    }, [dispatch]);
 
-        fetchData();
-    }, []); // [] means this effect runs only once when the component mounts
+    const navigate = useNavigate();
 
     if (loading) { return <p>Loading Employees...</p>; }
     if (error) { return <p style={{ color: "red" }}>Error: {error}</p>; }
 
-    const handleDelete = async (id: number) => {
-        if (window.confirm("Are you sure you want to delete this employee?")) {
-            await deleteEmployee(id);
-            const data = await getEmployees();
-            setEmployees(data);
-        }
-    };
-
-    async function fetchData() {
-        try {
-            const data = await getEmployees();
-            setEmployees(data);
-        } catch (error) {
-            setError(`Failed to fetch employees. Please try again later.${error}`);
-        } finally {
-            setLoading(false);
-        }
-    }
-
     return (
         <div>
-            <button onClick={() => fetchData()}>Refresh</button>
+            {/* <button onClick={() => fetchData()}>Refresh</button> */}
             <h2>Employee List</h2>
-            <p>Total Employees: {employees.length}</p>
+            <p>Total Employees: {list.length}</p>
             <button onClick={() => navigate('/employees/add')}>Add New Employee</button>
             <button onClick={() => {
                 localStorage.removeItem('token');
                 navigate('/');
             }}>Logout</button>
-            
+
             <table border={1}>
                 <thead>
                     <tr>
@@ -76,7 +39,7 @@ function EmployeeList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {employees.map((emp) => (
+                    {list.map((emp) => (
                         <tr key={emp.id}>
                             <td>{emp.id}</td>
                             <td>{emp.firstname} {emp.lastname}</td>
@@ -85,7 +48,7 @@ function EmployeeList() {
                             <td>
                                 <button onClick={() => navigate(`/employees/${emp.id}`)}>View</button>
                                 <button onClick={() => navigate(`/employees/${emp.id}/edit`)}>Edit</button>
-                                <button onClick={() => handleDelete(emp.id)}>Delete</button>
+                                <button onClick={() => dispatch(deleteEmployeeThunk(emp.id))}>Delete</button>
                             </td>
                         </tr>
                     ))}
