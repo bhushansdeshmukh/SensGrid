@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store/store';
 import { fetchEmployees, deleteEmployeeThunk } from '../store/employeeSlice';
 import { useNavigate } from 'react-router-dom';
+import { clearToken } from "../store/authSlice";
 
 function EmployeeList() {
     const dispatch = useDispatch<AppDispatch>();
@@ -24,7 +25,7 @@ function EmployeeList() {
             <p>Total Employees: {list.length}</p>
             <button onClick={() => navigate('/employees/add')}>Add New Employee</button>
             <button onClick={() => {
-                localStorage.removeItem('token');
+                dispatch(clearToken());
                 navigate('/');
             }}>Logout</button>
 

@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import type { AppDispatch } from '../store/store';
+import { setToken } from '../store/authSlice';
 
 function Login() {
+    const dispatch = useDispatch<AppDispatch>();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
@@ -15,8 +19,7 @@ function Login() {
         try {
             const response = await axios.post(`${API_URL}/login`, { email, password });
             const token = response.data.token;
-            // Store the token in localStorage or sessionStorage based on rememberMe
-            localStorage.setItem('token', token); //store jwt
+            dispatch(setToken(token));
             navigate('/employees'); // Navigate to EmployeeList page after login
         } catch (error) {
             console.error('Login failed:', error);
